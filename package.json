@@ -25,7 +25,11 @@
       "lljsy": [
         {
           "id": "lljsy",
-          "name": "视图名称"
+          "name": "个人信息"
+        },
+        {
+          "id": "lljsy2",
+          "name": "召唤兽"
         }
       ]
     },
@@ -65,7 +69,8 @@
     "typescript": "^3.3.1",
     "vscode": "^1.1.28",
     "webpack": "^4.33.0",
-    "webpack-cli": "^3.3.5"
+    "webpack-cli": "^3.3.5",
+    "fs-extra": "^8.0.1"
   },
   "dependencies": {}
 }
