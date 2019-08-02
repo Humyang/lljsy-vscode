@@ -19,17 +19,25 @@
       {
         "command": "lljsy.helloWorld",
         "title": "按钮"
+      },
+      {
+        "command": "lljsy.discover",
+        "title": "探索"
       }
     ],
     "views": {
       "lljsy": [
         {
           "id": "lljsy",
-          "name": "个人信息"
+          "name": "角色"
         },
         {
           "id": "lljsy2",
-          "name": "召唤兽"
+          "name": "宠物"
+        },
+        {
+          "id": "theWilds",
+          "name": "野外"
         }
       ]
     },
@@ -47,6 +55,11 @@
         {
           "command": "lljsy.helloWorld",
           "when": "view == lljsy",
+          "group": "navigation"
+        },
+        {
+          "command": "lljsy.discover",
+          "when": "view == theWilds",
           "group": "navigation"
         }
       ],

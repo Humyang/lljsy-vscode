@@ -15,6 +15,12 @@ export async function activate(context: vscode.ExtensionContext) {
       async () => {
         
       }
+    ),
+    vscode.commands.registerCommand(
+      "lljsy.discover",
+      async () => {
+        
+      }
     )
   );
 }
