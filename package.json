@@ -12,13 +12,17 @@
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onView:lljsy"
+    "onView:user"
   ],
   "contributes": {
     "commands": [
       {
-        "command": "lljsy.helloWorld",
-        "title": "按钮"
+        "command": "user.login",
+        "title": "登录"
+      },
+      {
+        "command": "character.helloWorld",
+        "title": "刷新"
       },
       {
         "command": "lljsy.discover",
@@ -28,11 +32,15 @@
     "views": {
       "lljsy": [
         {
-          "id": "lljsy",
+          "id": "user",
+          "name": "账户"
+        },
+        {
+          "id": "character",
           "name": "角色"
         },
         {
-          "id": "lljsy2",
+          "id": "userAnimal",
           "name": "宠物"
         },
         {
@@ -45,7 +53,7 @@
       "activitybar": [
         {
           "id": "lljsy",
-          "title": "侧边栏名称",
+          "title": "XXXX",
           "icon": "media/dep.svg"
         }
       ]
@@ -53,8 +61,13 @@
     "menus": {
       "view/title": [
         {
-          "command": "lljsy.helloWorld",
-          "when": "view == lljsy",
+          "command": "user.login",
+          "when": "view == user",
+          "group": "navigation"
+        },
+        {
+          "command": "character.helloWorld",
+          "when": "view == character",
           "group": "navigation"
         },
         {
