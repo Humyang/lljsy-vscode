@@ -12,7 +12,7 @@
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onView:user"
+    "onView:character"
   ],
   "contributes": {
     "commands": [
@@ -21,8 +21,8 @@
         "title": "登录"
       },
       {
-        "command": "character.helloWorld",
-        "title": "刷新"
+        "command": "character.pick",
+        "title": "选择角色"
       },
       {
         "command": "lljsy.discover",
@@ -31,10 +31,6 @@
     ],
     "views": {
       "lljsy": [
-        {
-          "id": "user",
-          "name": "账户"
-        },
         {
           "id": "character",
           "name": "角色"
@@ -60,11 +56,6 @@
     },
     "menus": {
       "view/title": [
-        {
-          "command": "user.login",
-          "when": "view == user",
-          "group": "navigation"
-        },
         {
           "command": "character.helloWorld",
           "when": "view == character",
@@ -98,5 +89,7 @@
     "webpack-cli": "^3.3.5",
     "fs-extra": "^8.0.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.19.0"
+  }
 }
