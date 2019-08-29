@@ -25,7 +25,7 @@
         "title": "选择角色"
       },
       {
-        "command": "lljsy.discover",
+        "command": "region.discover",
         "title": "探索"
       }
     ],
@@ -40,7 +40,7 @@
           "name": "宠物"
         },
         {
-          "id": "theWilds",
+          "id": "region",
           "name": "野外"
         }
       ]
@@ -62,8 +62,8 @@
           "group": "navigation"
         },
         {
-          "command": "lljsy.discover",
-          "when": "view == theWilds",
+          "command": "region.discover",
+          "when": "view == region",
           "group": "navigation"
         }
       ],
