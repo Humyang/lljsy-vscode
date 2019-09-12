@@ -27,6 +27,18 @@
       {
         "command": "region.discover",
         "title": "探索"
+      },
+      {
+        "command": "region.runAway",
+        "title": "逃跑"
+      },
+      {
+        "command": "region.attack",
+        "title": "攻击"
+      },
+      {
+        "command": "region.catch",
+        "title": "捕捉"
       }
     ],
     "views": {
@@ -65,9 +77,25 @@
           "command": "region.discover",
           "when": "view == region",
           "group": "navigation"
+        },
+        {
+          "command": "region.runAway",
+          "when": "view == region",
+          "group": "navigation"
         }
       ],
-      "view/item/context": []
+      "view/item/context": [
+        {
+          "command": "region.attack",
+          "when": "view == region && viewItem== monster",
+          "group": "inline"
+        },
+        {
+          "command": "region.catch",
+          "when": "view == region && viewItem== monster",
+          "group": "inline"
+        }
+      ]
     }
   },
   "scripts": {

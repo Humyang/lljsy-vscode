@@ -7,6 +7,7 @@ var fs = require('fs');
 
 import server from './server';
 import { actionTree } from './actionTree';
+import { discover } from './method';
 export async function activate(context: vscode.ExtensionContext) {
   let aT = new actionTree(context);
   let api = server(context);
@@ -35,6 +36,24 @@ export async function activate(context: vscode.ExtensionContext) {
   regionPick.text = '当前区域';
   regionPick.command = 'regionPick.pick';
   regionPick.show();
+
+  // 读取本地数据
+  let token = context.workspaceState.get('token');
+  if (token) {
+    let characterName: string = context.workspaceState.get('characterName');
+    let cId = context.workspaceState.get('characterId');
+
+    characterPick.text = '当前角色：' + characterName + `(${cId})`;
+
+    let regionId = context.workspaceState.get('regionId');
+
+    let regionName = context.workspaceState.get('regionName');
+    regionPick.text = '当前区域：' + regionName + `(${regionId})`;
+    loginOut.show();
+    regiset.hide();
+    notLogin.hide();
+    characterPick.show();
+  }
 
   context.subscriptions.push(
     vscode.commands.registerCommand('user.login', async () => {
@@ -137,19 +156,48 @@ export async function activate(context: vscode.ExtensionContext) {
       context.workspaceState.update('regionName', f.regionName);
     }),
     vscode.commands.registerCommand('region.discover', async () => {
-      console.log('222');
+      // console.log('222');
+      discover(context, aT, api);
+    }),
+    vscode.commands.registerCommand('region.runAway', async () => {
+      // console.log('222');
       let characterId = context.workspaceState.get('characterId');
       let regionId = context.workspaceState.get('regionId');
+
+      // let ActionData = JSON.parse(context.workspaceState.get('ActionData'));
+      let ActionData: any = context.workspaceState.get('ActionData');
+      if (ActionData) {
+        let ac = JSON.parse(ActionData);
+        let data = await api({
+          url: 'action/runAway',
+          method: 'GET',
+          data: { regionId, characterId, fightActionId: ac.id }
+        });
+
+        context.workspaceState.update('ActionData', undefined);
+        // console.log('inWar', data);
+
+        aT.createTreeView(context);
+      }
+    }),
+    vscode.commands.registerCommand('region.catch', async (i, b) => {
+      // console.log('region.catch', i, b);
+      let characterId = context.workspaceState.get('characterId');
+      let regionId = context.workspaceState.get('regionId');
+      let ActionData: any = context.workspaceState.get('ActionData');
+      let ac = JSON.parse(ActionData);
       let data = await api({
-        url: 'action/inWar',
-        method: 'GET',
-        data: { regionId, characterId }
+        url: 'action/catch',
+        method: 'POST',
+        data: { characterId, fightActionId: ac.id, catchTargetId: i.id }
       });
-
-      context.workspaceState.update('ActionData', JSON.stringify(data.data));
-      // console.log('inWar', data);
-
-      aT.createTreeView(context);
+      console.log('catch result', data.data);
+      if (data.data === true) {
+        vscode.window.showInformationMessage('捕捉成功');
+        discover(context, aT, api);
+      } else {
+        vscode.window.showInformationMessage('捕捉失败');
+      }
     })
   );
 }

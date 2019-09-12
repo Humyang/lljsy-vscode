@@ -167,6 +167,8 @@ export class FileStat implements vscode.FileStat {
 interface Entry {
   uri: vscode.Uri;
   type: vscode.FileType;
+  id: number;
+  status: number;
 }
 
 //#endregion
@@ -326,22 +328,27 @@ export class FileSystemProvider
   // tree data provider
 
   async getChildren(element?: Entry): Promise<Entry[]> {
-    let data = JSON.parse(this._context.workspaceState.get('ActionData'));
-    let e: Entry[] = data.map(item => {
-      var entry: Entry = {
-        uri: vscode.Uri.file(`./${item.master + item.name}.js`),
-        type: vscode.FileType.Unknown
-      };
-      return entry;
-    });
-    // var e: Entry = {
-    //   uri: vscode.Uri.file('./111.js'),
-    //   type: vscode.FileType.Unknown
-    // };
-    // e.uri = vscode.Uri.file('123123');
-    // e.type = vscode.FileType.Unknown;
+    let ActionData: any = this._context.workspaceState.get('ActionData');
+    if (ActionData) {
+      let data = JSON.parse(ActionData);
+      let e: Entry[] = data.monsterList.map(item => {
+        var entry: Entry = {
+          uri: vscode.Uri.file(`./${item.master + item.name}.js`),
+          type: vscode.FileType.Unknown,
+          status: 1,
+          id: item.id
+        };
+        return entry;
+      });
+      // var e: Entry = {
+      //   uri: vscode.Uri.file('./111.js'),
+      //   type: vscode.FileType.Unknown
+      // };
+      // e.uri = vscode.Uri.file('123123');
+      // e.type = vscode.FileType.Unknown;
 
-    return e;
+      return e;
+    }
     // [{ name: 123, type: 'file' }].map(([name, type]) => ({
     //   uri: vscode.Uri.file(name),
     //   type
@@ -403,7 +410,7 @@ export class FileSystemProvider
     //   }
     // }
 
-    // return [];
+    return [];
   }
 
   getTreeItem(element: Entry): vscode.TreeItem {
@@ -413,14 +420,14 @@ export class FileSystemProvider
         ? vscode.TreeItemCollapsibleState.Collapsed
         : vscode.TreeItemCollapsibleState.None
     );
-    if (element.type === vscode.FileType.File) {
-      treeItem.command = {
-        command: 'region.openFile',
-        title: 'Open File',
-        arguments: [element.uri]
-      };
-      treeItem.contextValue = 'file';
-    }
+    // if (element.type === vscode.FileType.File) {
+    //   treeItem.command = {
+    //     command: 'region.openFile',
+    //     title: 'Open File',
+    //     arguments: [element.uri]
+    //   };
+    // }
+    treeItem.contextValue = 'monster';
     return treeItem;
   }
 }
