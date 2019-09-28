@@ -7,9 +7,12 @@ var fs = require('fs');
 
 import server from './server';
 import { actionTree } from './actionTree';
-import { discover } from './method';
+
+import { userAnimalTree } from './userAnimalTree';
+import { discover, getMyAnimal } from './method';
 export async function activate(context: vscode.ExtensionContext) {
   let aT = new actionTree(context);
+  let uAT = new userAnimalTree(context);
   let api = server(context);
   var notLogin = vscode.window.createStatusBarItem(
     vscode.StatusBarAlignment.Left,
@@ -158,7 +161,9 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand('region.discover', async () => {
       // console.log('222');
       discover(context, aT, api);
+      getMyAnimal(context, uAT, api);
     }),
+
     vscode.commands.registerCommand('region.runAway', async () => {
       // console.log('222');
       let characterId = context.workspaceState.get('characterId');
