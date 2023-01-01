@@ -110,11 +110,11 @@
     "@types/mocha": "^2.2.42",
     "@types/node": "^10.12.21",
     "eslint": "^5.13.0",
-    "ts-loader": "^6.0.2",
+    "ts-loader": "^9.4.2",
     "typescript": "^3.3.1",
     "vscode": "^1.1.28",
-    "webpack": "^4.33.0",
-    "webpack-cli": "^3.3.5",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "fs-extra": "^8.0.1"
   },
   "dependencies": {
